@@ -1,134 +1,41 @@
 (() => {
   const KEY = 'timeshift-language';
+  const supported = ['es','en','pt','fr','zh','hi','ar'];
+  const labels = { es:'Español', en:'English', pt:'Português', fr:'Français', zh:'中文', hi:'हिन्दी', ar:'العربية' };
+  const browser = (navigator.language || 'en').toLowerCase().split('-')[0];
   const saved = localStorage.getItem(KEY);
-  const detected = (navigator.language || 'en').toLowerCase().startsWith('es') ? 'es' : 'en';
-  let lang = saved === 'es' || saved === 'en' ? saved : detected;
+  let lang = supported.includes(saved) ? saved : (supported.includes(browser) ? browser : 'en');
 
-  const en = {
-    'Detectando zona...': 'Detecting time zone...',
-    'CONVERTIDOR DE ZONAS HORARIAS': 'TIME ZONE CONVERTER',
-    '¿A qué hora es': 'What time is it',
-    'para mí?': 'for me?',
-    'Escribe una hora como te la mandarían por chat. La convertimos a tu zona local automáticamente.': 'Type a time the way someone would send it in chat. We convert it to your local time zone automatically.',
-    'Ej. 9:00 AM ET': 'Ex. 9:00 AM ET',
-    'Convertir': 'Convert',
-    'Prueba:': 'Try:',
-    'ORIGEN': 'SOURCE',
-    'TU HORA': 'YOUR TIME',
-    'AHORA MISMO': 'RIGHT NOW',
-    'Reloj mundial': 'World clock',
-    'Se actualiza automáticamente': 'Updates automatically',
-    'RECIENTES': 'RECENT',
-    'Tus conversiones': 'Your conversions',
-    'Limpiar': 'Clear',
-    'Hecha para ser simple': 'Made to be simple',
-    'Esta página fue vibecodeada por diversión. No tiene anuncios, popups, cuentas, cookies raras ni botones falsos. Solo existe para convertir horarios rápido y sin páginas llenas de anuncios XD.': 'This page was vibecoded for fun. It has no ads, popups, accounts, weird cookies, or fake buttons. It only exists to convert times quickly without ad-filled websites XD.',
-    'La zona local se detecta en tu dispositivo. No usamos GPS.': 'Your local time zone is detected on your device. We do not use GPS.',
-    'Tu hora': 'Your time',
-    'Nueva York': 'New York',
-    'Londres': 'London',
-    'Tokio': 'Tokyo',
-    'Seúl': 'Seoul',
-    'Ciudad de México': 'Mexico City',
-    'España': 'Spain',
-    'Japón': 'Japan',
-    'Escribe una hora, por ejemplo: 9:00 AM ET': 'Type a time, for example: 9:00 AM ET',
-    'No reconocí la zona horaria. Prueba con ET, PT, JST, España, Tokyo, London, etc.': 'I could not recognize that time zone. Try ET, PT, JST, Spain, Tokyo, London, etc.',
-    'No pude entender la hora. Prueba algo como 9:00 AM ET o 18:30 España.': 'I could not understand that time. Try something like 9:00 AM ET or 18:30 Spain.',
-    'No pude convertir esa hora.': 'I could not convert that time.',
-    'Detectado por tu navegador': 'Detected by your browser',
-    'Hora a convertir': 'Time to convert',
-    'TimeShift inicio': 'TimeShift home'
+  const translations = {
+    en: {
+      'Detectando zona...':'Detecting time zone...','CONVERTIDOR DE ZONAS HORARIAS':'TIME ZONE CONVERTER','¿A qué hora es':'What time is it','para mí?':'for me?','Escribe una hora como te la mandarían por chat. La convertimos a tu zona local automáticamente.':'Type a time the way someone would send it in chat. We convert it to your local time zone automatically.','Ej. 9:00 AM ET':'Ex. 9:00 AM ET','Convertir':'Convert','Prueba:':'Try:','ORIGEN':'SOURCE','TU HORA':'YOUR TIME','AHORA MISMO':'RIGHT NOW','Reloj mundial':'World clock','Se actualiza automáticamente':'Updates automatically','RECIENTES':'RECENT','Tus conversiones':'Your conversions','Limpiar':'Clear','Hecha para ser simple':'Made to be simple','Esta página fue vibecodeada por diversión. No tiene anuncios, popups, cuentas, cookies raras ni botones falsos. Solo existe para convertir horarios rápido y sin páginas llenas de anuncios XD.':'This page was vibecoded for fun. It has no ads, popups, accounts, weird cookies, or fake buttons. It only exists to convert times quickly without ad-filled websites XD.','La zona local se detecta en tu dispositivo. No usamos GPS.':'Your local time zone is detected on your device. We do not use GPS.','Tu hora':'Your time','Nueva York':'New York','Londres':'London','Tokio':'Tokyo','Seúl':'Seoul','Ciudad de México':'Mexico City','España':'Spain','Japón':'Japan','Escribe una hora, por ejemplo: 9:00 AM ET':'Type a time, for example: 9:00 AM ET','No reconocí la zona horaria. Prueba con ET, PT, JST, España, Tokyo, London, etc.':'I could not recognize that time zone. Try ET, PT, JST, Spain, Tokyo, London, etc.','No pude entender la hora. Prueba algo como 9:00 AM ET o 18:30 España.':'I could not understand that time. Try something like 9:00 AM ET or 18:30 Spain.','No pude convertir esa hora.':'I could not convert that time.','Detectado por tu navegador':'Detected by your browser','Hora a convertir':'Time to convert','TimeShift inicio':'TimeShift home'
+    },
+    pt: {
+      'Detectando zona...':'Detectando fuso horário...','CONVERTIDOR DE ZONAS HORARIAS':'CONVERSOR DE FUSOS HORÁRIOS','¿A qué hora es':'Que horas são','para mí?':'para mim?','Escribe una hora como te la mandarían por chat. La convertimos a tu zona local automáticamente.':'Digite um horário como alguém enviaria no chat. Nós o convertemos automaticamente para o seu fuso local.','Ej. 9:00 AM ET':'Ex. 9:00 AM ET','Convertir':'Converter','Prueba:':'Teste:','ORIGEN':'ORIGEM','TU HORA':'SUA HORA','AHORA MISMO':'AGORA','Reloj mundial':'Relógio mundial','Se actualiza automáticamente':'Atualiza automaticamente','RECIENTES':'RECENTES','Tus conversiones':'Suas conversões','Limpiar':'Limpar','Hecha para ser simple':'Feita para ser simples','Esta página fue vibecodeada por diversión. No tiene anuncios, popups, cuentas, cookies raras ni botones falsos. Solo existe para convertir horarios rápido y sin páginas llenas de anuncios XD.':'Esta página foi vibecodada por diversão. Sem anúncios, popups, contas, cookies estranhos ou botões falsos. Só existe para converter horários rapidamente sem sites cheios de anúncios XD.','La zona local se detecta en tu dispositivo. No usamos GPS.':'Seu fuso local é detectado no dispositivo. Não usamos GPS.','Tu hora':'Sua hora','Nueva York':'Nova York','Londres':'Londres','Tokio':'Tóquio','Seúl':'Seul','Ciudad de México':'Cidade do México','España':'Espanha','Japón':'Japão','Escribe una hora, por ejemplo: 9:00 AM ET':'Digite um horário, por exemplo: 9:00 AM ET','No reconocí la zona horaria. Prueba con ET, PT, JST, España, Tokyo, London, etc.':'Não reconheci o fuso horário. Tente ET, PT, JST, Espanha, Tóquio, Londres etc.','No pude entender la hora. Prueba algo como 9:00 AM ET o 18:30 España.':'Não consegui entender o horário. Tente 9:00 AM ET ou 18:30 Espanha.','No pude convertir esa hora.':'Não foi possível converter esse horário.'
+    },
+    fr: {
+      'Detectando zona...':'Détection du fuseau...','CONVERTIDOR DE ZONAS HORARIAS':'CONVERTISSEUR DE FUSEAUX HORAIRES','¿A qué hora es':'Quelle heure est-il','para mí?':'chez moi ?','Escribe una hora como te la mandarían por chat. La convertimos a tu zona local automáticamente.':'Saisissez une heure comme on vous l’enverrait dans un chat. Elle sera automatiquement convertie dans votre fuseau local.','Convertir':'Convertir','Prueba:':'Essayer :','ORIGEN':'ORIGINE','TU HORA':'VOTRE HEURE','AHORA MISMO':'MAINTENANT','Reloj mundial':'Horloge mondiale','Se actualiza automáticamente':'Mise à jour automatique','RECIENTES':'RÉCENTES','Tus conversiones':'Vos conversions','Limpiar':'Effacer','Hecha para ser simple':'Conçue pour être simple','Esta página fue vibecodeada por diversión. No tiene anuncios, popups, cuentas, cookies raras ni botones falsos. Solo existe para convertir horarios rápido y sin páginas llenas de anuncios XD.':'Cette page a été vibecodée pour le plaisir. Pas de pubs, popups, comptes, cookies bizarres ni faux boutons. Elle existe juste pour convertir les heures rapidement sans sites remplis de pubs XD.','La zona local se detecta en tu dispositivo. No usamos GPS.':'Votre fuseau local est détecté sur votre appareil. Nous n’utilisons pas le GPS.','Tu hora':'Votre heure','Nueva York':'New York','Londres':'Londres','Tokio':'Tokyo','Seúl':'Séoul','Ciudad de México':'Mexico','España':'Espagne','Japón':'Japon','No pude convertir esa hora.':'Impossible de convertir cette heure.'
+    },
+    zh: {
+      'Detectando zona...':'正在检测时区...','CONVERTIDOR DE ZONAS HORARIAS':'时区转换器','¿A qué hora es':'这个时间','para mí?':'在我这里是几点？','Escribe una hora como te la mandarían por chat. La convertimos a tu zona local automáticamente.':'输入聊天中收到的时间，我们会自动转换为你的本地时区。','Convertir':'转换','Prueba:':'试试：','ORIGEN':'来源','TU HORA':'你的时间','AHORA MISMO':'当前时间','Reloj mundial':'世界时钟','Se actualiza automáticamente':'自动更新','RECIENTES':'最近记录','Tus conversiones':'你的转换记录','Limpiar':'清除','Hecha para ser simple':'为简单而做','Esta página fue vibecodeada por diversión. No tiene anuncios, popups, cuentas, cookies raras ni botones falsos. Solo existe para convertir horarios rápido y sin páginas llenas de anuncios XD.':'这个页面只是为了好玩而 vibecode。没有广告、弹窗、账户、奇怪的 Cookie 或假按钮。它只是为了让你快速转换时间，不用忍受满屏广告的网站 XD。','La zona local se detecta en tu dispositivo. No usamos GPS.':'本地时区由你的设备检测。我们不使用 GPS。','Tu hora':'你的时间','Nueva York':'纽约','Londres':'伦敦','Tokio':'东京','Seúl':'首尔','Ciudad de México':'墨西哥城','España':'西班牙','Japón':'日本','No pude convertir esa hora.':'无法转换该时间。'
+    },
+    hi: {
+      'Detectando zona...':'समय क्षेत्र पता लगाया जा रहा है...','CONVERTIDOR DE ZONAS HORARIAS':'समय क्षेत्र कन्वर्टर','¿A qué hora es':'यह समय','para mí?':'मेरे लिए कब है?','Escribe una hora como te la mandarían por chat. La convertimos a tu zona local automáticamente.':'चैट में मिले समय की तरह समय लिखें। हम इसे अपने आप आपके स्थानीय समय क्षेत्र में बदल देंगे।','Convertir':'बदलें','Prueba:':'आजमाएँ:','ORIGEN':'स्रोत','TU HORA':'आपका समय','AHORA MISMO':'अभी','Reloj mundial':'विश्व घड़ी','Se actualiza automáticamente':'अपने आप अपडेट होता है','RECIENTES':'हाल के','Tus conversiones':'आपके रूपांतरण','Limpiar':'साफ़ करें','Hecha para ser simple':'सरल रहने के लिए बनाया गया','Esta página fue vibecodeada por diversión. No tiene anuncios, popups, cuentas, cookies raras ni botones falsos. Solo existe para convertir horarios rápido y sin páginas llenas de anuncios XD.':'यह पेज मज़े के लिए vibecode किया गया है। इसमें विज्ञापन, पॉपअप, अकाउंट, अजीब कुकीज़ या नकली बटन नहीं हैं। यह बस समय जल्दी बदलने के लिए है XD।','La zona local se detecta en tu dispositivo. No usamos GPS.':'आपका स्थानीय समय क्षेत्र डिवाइस से पता चलता है। हम GPS का उपयोग नहीं करते।','Tu hora':'आपका समय','Nueva York':'न्यूयॉर्क','Londres':'लंदन','Tokio':'टोक्यो','Seúl':'सियोल','Ciudad de México':'मेक्सिको सिटी','España':'स्पेन','Japón':'जापान','No pude convertir esa hora.':'यह समय कन्वर्ट नहीं हो सका।'
+    },
+    ar: {
+      'Detectando zona...':'جارٍ اكتشاف المنطقة الزمنية...','CONVERTIDOR DE ZONAS HORARIAS':'محوّل المناطق الزمنية','¿A qué hora es':'ما الوقت','para mí?':'عندي؟','Escribe una hora como te la mandarían por chat. La convertimos a tu zona local automáticamente.':'اكتب الوقت كما يصلك في الدردشة وسنحوّله تلقائيًا إلى منطقتك الزمنية المحلية.','Convertir':'تحويل','Prueba:':'جرّب:','ORIGEN':'المصدر','TU HORA':'وقتك','AHORA MISMO':'الآن','Reloj mundial':'الساعة العالمية','Se actualiza automáticamente':'يتم التحديث تلقائيًا','RECIENTES':'الأخيرة','Tus conversiones':'تحويلاتك','Limpiar':'مسح','Hecha para ser simple':'صُممت لتكون بسيطة','Esta página fue vibecodeada por diversión. No tiene anuncios, popups, cuentas, cookies raras ni botones falsos. Solo existe para convertir horarios rápido y sin páginas llenas de anuncios XD.':'تمت برمجة هذه الصفحة بطريقة vibecode للمتعة. لا إعلانات ولا نوافذ منبثقة ولا حسابات ولا ملفات تعريف ارتباط غريبة ولا أزرار مزيفة. فقط لتحويل الوقت بسرعة XD.','La zona local se detecta en tu dispositivo. No usamos GPS.':'يتم اكتشاف منطقتك الزمنية على جهازك. لا نستخدم GPS.','Tu hora':'وقتك','Nueva York':'نيويورك','Londres':'لندن','Tokio':'طوكيو','Seúl':'سيول','Ciudad de México':'مكسيكو سيتي','España':'إسبانيا','Japón':'اليابان','No pude convertir esa hora.':'تعذر تحويل هذا الوقت.'
+    }
   };
 
-  function t(value) {
-    if (lang !== 'en') return value;
-    return en[value] || value;
-  }
+  const t = value => lang === 'es' ? value : (translations[lang]?.[value] || translations.en[value] || value);
+  function tx(node){const raw=node.nodeValue||'';const s=raw.trim();if(!s)return;const v=t(s);if(v!==s)node.nodeValue=(raw.match(/^\s*/)?.[0]||'')+v+(raw.match(/\s*$/)?.[0]||'')}
+  function el(e){if(!(e instanceof Element))return;['placeholder','title','aria-label'].forEach(a=>{const v=e.getAttribute(a);if(v){const n=t(v);if(n!==v)e.setAttribute(a,n)}});e.childNodes.forEach(n=>n.nodeType===3&&tx(n))}
+  function tree(root=document.body){if(!root)return;if(root instanceof Element)el(root);const w=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode())n.nodeType===3?tx(n):el(n);document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.title=lang==='es'?'TimeShift':'TimeShift — '+t('CONVERTIDOR DE ZONAS HORARIAS')}
 
-  function translateText(node) {
-    const raw = node.nodeValue || '';
-    const trimmed = raw.trim();
-    if (!trimmed) return;
-    const translated = t(trimmed);
-    if (translated !== trimmed) {
-      const lead = raw.match(/^\s*/)?.[0] || '';
-      const trail = raw.match(/\s*$/)?.[0] || '';
-      node.nodeValue = lead + translated + trail;
-    }
-  }
-
-  function translateElement(el) {
-    if (!(el instanceof Element)) return;
-    ['placeholder', 'title', 'aria-label'].forEach(attr => {
-      const v = el.getAttribute(attr);
-      if (v) {
-        const tr = t(v);
-        if (tr !== v) el.setAttribute(attr, tr);
-      }
-    });
-    el.childNodes.forEach(child => {
-      if (child.nodeType === Node.TEXT_NODE) translateText(child);
-    });
-  }
-
-  function translateTree(root = document.body) {
-    if (!root) return;
-    if (root instanceof Element) translateElement(root);
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
-    let node;
-    while ((node = walker.nextNode())) {
-      if (node.nodeType === Node.TEXT_NODE) translateText(node);
-      else translateElement(node);
-    }
-    document.documentElement.lang = lang;
-    document.title = lang === 'en' ? 'TimeShift — Time Zone Converter' : 'TimeShift';
-  }
-
-  function addStyles() {
-    if (document.getElementById('language-switcher-style')) return;
-    const style = document.createElement('style');
-    style.id = 'language-switcher-style';
-    style.textContent = `.language-switcher{margin-left:auto;display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);border-radius:10px;color:inherit;font:600 12px/1 Inter,system-ui,sans-serif;outline:none;cursor:pointer}.language-switcher:focus{border-color:rgba(167,139,250,.55)}.topbar{gap:12px}.zone-badge{margin-left:0!important}@media(max-width:560px){.language-switcher{padding:7px 8px;max-width:112px}}`;
-    document.head.appendChild(style);
-  }
-
-  function ensureSelector() {
-    const header = document.querySelector('.topbar');
-    if (!header || document.getElementById('languageSwitcher')) return;
-    addStyles();
-    const select = document.createElement('select');
-    select.id = 'languageSwitcher';
-    select.className = 'language-switcher';
-    select.setAttribute('aria-label', lang === 'en' ? 'Language' : 'Idioma');
-    select.innerHTML = '<option value="es">🌐 Español</option><option value="en">🌐 English</option>';
-    select.value = lang;
-    select.addEventListener('change', () => {
-      localStorage.setItem(KEY, select.value);
-      location.reload();
-    });
-    const badge = header.querySelector('.zone-badge');
-    header.insertBefore(select, badge || null);
-  }
-
-  window.PageI18n = { get lang() { return lang; }, t };
-
-  const start = () => {
-    ensureSelector();
-    translateTree();
-    const observer = new MutationObserver(mutations => {
-      for (const m of mutations) {
-        m.addedNodes.forEach(n => {
-          if (n.nodeType === Node.ELEMENT_NODE) translateTree(n);
-          else if (n.nodeType === Node.TEXT_NODE) translateText(n);
-        });
-        if (m.type === 'characterData' && m.target.nodeType === Node.TEXT_NODE) translateText(m.target);
-      }
-      ensureSelector();
-    });
-    observer.observe(document.documentElement, { subtree: true, childList: true, characterData: true });
-  };
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-  else start();
+  function styles(){if(document.getElementById('language-switcher-style'))return;const st=document.createElement('style');st.id='language-switcher-style';st.textContent=`.lang-wrap{position:relative;margin-left:auto;z-index:50}.lang-button{display:flex;align-items:center;gap:8px;min-width:132px;justify-content:space-between;padding:9px 12px;border:1px solid rgba(167,139,250,.35);background:#11121a;color:#f5f3ff;border-radius:12px;font:700 12px Inter,system-ui;cursor:pointer}.lang-button:hover,.lang-button[aria-expanded=true]{border-color:#9b7cff;background:#171522}.lang-menu{position:absolute;right:0;top:calc(100% + 8px);min-width:176px;padding:6px;background:#11121a;border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 50px rgba(0,0,0,.5);border-radius:13px;display:none}.lang-wrap.open .lang-menu{display:block}.lang-option{width:100%;display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border:0;background:transparent;color:#d9d7e5;border-radius:8px;text-align:left;font:600 12px Inter,system-ui;cursor:pointer}.lang-option:hover,.lang-option.active{background:rgba(155,124,255,.14);color:#fff}.lang-check{color:#a78bfa}.topbar{gap:12px}.zone-badge{margin-left:0!important}@media(max-width:650px){.lang-button{min-width:auto}.lang-label{display:none}.lang-menu{right:0}}`;
+  document.head.appendChild(st)}
+  function selector(){const h=document.querySelector('.topbar');if(!h||document.getElementById('languageSwitcher'))return;styles();const wrap=document.createElement('div');wrap.id='languageSwitcher';wrap.className='lang-wrap';const b=document.createElement('button');b.type='button';b.className='lang-button';b.setAttribute('aria-expanded','false');b.innerHTML=`<span>🌐 <span class="lang-label">${labels[lang]}</span></span><span>⌄</span>`;const menu=document.createElement('div');menu.className='lang-menu';menu.setAttribute('role','menu');menu.innerHTML=supported.map(code=>`<button type="button" class="lang-option ${code===lang?'active':''}" data-lang="${code}"><span>${labels[code]}</span>${code===lang?'<span class="lang-check">✓</span>':''}</button>`).join('');b.onclick=e=>{e.stopPropagation();const open=wrap.classList.toggle('open');b.setAttribute('aria-expanded',String(open))};menu.onclick=e=>{const o=e.target.closest('[data-lang]');if(!o)return;localStorage.setItem(KEY,o.dataset.lang);location.reload()};wrap.append(b,menu);h.insertBefore(wrap,h.querySelector('.zone-badge')||null);document.addEventListener('click',()=>{wrap.classList.remove('open');b.setAttribute('aria-expanded','false')})}
+  window.PageI18n={get lang(){return lang},t};
+  const start=()=>{selector();tree();new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>n.nodeType===1?tree(n):n.nodeType===3&&tx(n));if(m.type==='characterData')tx(m.target)}selector()}).observe(document.documentElement,{subtree:true,childList:true,characterData:true})};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start):start();
 })();

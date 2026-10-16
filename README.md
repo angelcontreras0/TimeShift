@@ -2,6 +2,10 @@
 
 Una pequeña web para convertir horarios de cualquier parte del mundo a tu hora local automáticamente.
 
+## Probar la web
+
+👉 https://angelcontreras0.github.io/TimeShift/
+
 ## Qué hace
 
 - Detecta tu zona horaria desde el navegador, sin GPS.
@@ -21,8 +25,6 @@ Una pequeña web para convertir horarios de cualquier parte del mundo a tu hora 
 ## Uso local
 
 Abre `index.html` en tu navegador o sirve la carpeta con cualquier servidor estático.
-
-Tambien puedes verla desde esta URL: https://angelcontreras0.github.io/timeshift/
 
 ## GitHub Pages
 

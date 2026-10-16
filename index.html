@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Convierte cualquier horario a tu hora local al instante." />
+  <meta name="theme-color" content="#0a0b10" />
+  <title>TimeShift</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="TimeShift inicio">
+        <span class="brand-icon">↔</span>
+        <span>TimeShift</span>
+      </a>
+      <div class="zone-badge" title="Detectado por tu navegador">
+        <span class="dot"></span>
+        <span id="detectedZone">Detectando zona...</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="kicker">CONVERTIDOR DE ZONAS HORARIAS</div>
+      <h1>¿A qué hora es<br><span>para mí?</span></h1>
+      <p class="lead">Escribe una hora como te la mandarían por chat. La convertimos a tu zona local automáticamente.</p>
+
+      <form id="converterForm" class="converter" autocomplete="off">
+        <div class="search-mark">⌕</div>
+        <input id="timeInput" type="text" placeholder="Ej. 9:00 AM ET" aria-label="Hora a convertir" spellcheck="false" />
+        <button type="submit">Convertir <span>↵</span></button>
+      </form>
+
+      <div class="examples">
+        <span>Prueba:</span>
+        <button type="button" data-example="9:00 AM ET">9:00 AM ET</button>
+        <button type="button" data-example="7:30 PM PT">7:30 PM PT</button>
+        <button type="button" data-example="10:00 PM JST">10:00 PM JST</button>
+        <button type="button" data-example="18:00 España">18:00 España</button>
+      </div>
+    </section>
+
+    <section id="resultCard" class="result-card hidden" aria-live="polite">
+      <div class="result-side">
+        <div class="result-label">ORIGEN</div>
+        <div id="originTime" class="result-time">—</div>
+        <div id="originZone" class="result-zone">—</div>
+        <div id="originDate" class="result-date">—</div>
+      </div>
+
+      <div class="arrow-bubble">→</div>
+
+      <div class="result-side local-result">
+        <div class="result-label accent-label">TU HORA</div>
+        <div id="localTime" class="result-time accent-time">—</div>
+        <div id="localZone" class="result-zone">—</div>
+        <div id="localDate" class="result-date">—</div>
+      </div>
+    </section>
+
+    <div id="errorBox" class="error-box hidden" role="alert"></div>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <div>
+          <div class="kicker">AHORA MISMO</div>
+          <h2>Reloj mundial</h2>
+        </div>
+        <span class="muted">Se actualiza automáticamente</span>
+      </div>
+      <div id="worldGrid" class="world-grid"></div>
+    </section>
+
+    <section id="historySection" class="section-block hidden">
+      <div class="section-heading">
+        <div>
+          <div class="kicker">RECIENTES</div>
+          <h2>Tus conversiones</h2>
+        </div>
+        <button id="clearHistory" class="text-button" type="button">Limpiar</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+    </section>
+
+    <footer>
+      <span>TimeShift</span>
+      <span>La zona local se detecta en tu dispositivo. No usamos GPS.</span>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

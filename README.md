@@ -22,6 +22,8 @@ Una pequeña web para convertir horarios de cualquier parte del mundo a tu hora 
 
 Abre `index.html` en tu navegador o sirve la carpeta con cualquier servidor estático.
 
+Tambien puedes verla desde esta URL: https://angelcontreras0.github.io/timeshift/
+
 ## GitHub Pages
 
 En el repositorio ve a **Settings → Pages → Build and deployment → Deploy from a branch** y elige:
